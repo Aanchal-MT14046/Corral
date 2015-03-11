@@ -2,29 +2,39 @@ package com.example.aanchalsingh.corral_project;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.os.Build;
 
 
-public class OrderFood extends FragmentActivity {
+public class FoodOrder extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_food);
+        setContentView(R.layout.activity_food_order);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://play.google.com/store/search?q=order%20food&c=apps&hl=en"));
         startActivity(intent);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
+        }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_order_food, menu);
+        getMenuInflater().inflate(R.menu.menu_food_order, menu);
         return true;
     }
 
@@ -41,5 +51,21 @@ public class OrderFood extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_food_order, container, false);
+            return rootView;
+        }
     }
 }

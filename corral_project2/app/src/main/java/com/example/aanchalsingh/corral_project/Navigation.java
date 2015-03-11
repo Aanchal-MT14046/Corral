@@ -54,19 +54,19 @@ public class Navigation extends ActionBarActivity
         switch(position) {
 
             case 0:
-                Intent login = new Intent(this,MainActivity.class);
-                startActivity(login);
+               // Intent login = new Intent(this,MainActivity.class);
+                //startActivity(login);
                 break;
             case 1:
-                Intent Restaurant = new Intent(this,RestaurantsActivity.class);
+                Intent Restaurant = new Intent(this,NearBy.class);
                 startActivity(Restaurant);
                 break;
             case 2:
-                Intent order = new Intent(this,OrderFood.class);
+                Intent order = new Intent(this,FoodOrder.class);
                 startActivity(order);
                 break;
             case 3:
-                Intent logout = new Intent(this, logout.class);
+                Intent logout = new Intent(this,quit.class);
                 startActivity(logout);
                 break;
 

@@ -19,5 +19,11 @@
 
     <string name="action_example">Example action</string>
     <string name="title_activity_logout">logout</string>
+    <string name="title_activity_restaurant">Restaurant</string>
+    <string name="title_activity_order">order</string>
+    <string name="title_activity_exit">exit</string>
+    <string name="title_activity_quit">quit</string>
+    <string name="title_activity_food_order">FoodOrder</string>
+    <string name="title_activity_near_by">NearBy</string>
 
 </resources>

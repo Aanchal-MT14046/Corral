@@ -23,10 +23,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.aanchalsingh.corral_project.Navigation" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAINACTIVITY" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -38,44 +39,39 @@
             android:value="AIzaSyA0ie2zJ94Bz7J3laGAoSKnTPpE0FFB1mk" />
 
         <activity
-            android:name=".RestaurantsActivity"
-            android:label="@string/title_activity_restaurants"
-            android:parentActivityName=".Navigation" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.aanchalsingh.corral_project.Navigation" />
-            <intent-filter>
-                <action android:name="android.intent.action.RESTAURANTSACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".OrderFood"
-            android:label="@string/title_activity_order_food"
-            android:parentActivityName=".Navigation" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.aanchalsingh.corral_project.Navigation" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.ORDERFOOD" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".Navigation"
             android:label="@string/title_activity_navigation" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.NAVIGATION" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".logout"
-            android:label="@string/title_activity_logout"
+            android:name=".quit"
+            android:label="@string/title_activity_quit"
+            android:parentActivityName=".Navigation" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.aanchalsingh.corral_project.Navigation" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.QUIT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FoodOrder"
+            android:label="@string/title_activity_food_order"
+            android:parentActivityName=".Navigation" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.aanchalsingh.corral_project.Navigation" />
+        </activity>
+        <activity
+            android:name=".NearBy"
+            android:label="@string/title_activity_near_by"
             android:parentActivityName=".Navigation" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

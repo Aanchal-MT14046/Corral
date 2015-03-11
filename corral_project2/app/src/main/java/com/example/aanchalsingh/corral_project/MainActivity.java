@@ -3,12 +3,15 @@ package com.example.aanchalsingh.corral_project;
 import java.io.InputStream;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,8 +35,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener, C
     private static final int RC_SIGN_IN = 0;
 
     // Google client to communicate with Google
-    private GoogleApiClient mGoogleApiClient;
-
+    public GoogleApiClient mGoogleApiClient;
+    private String personName;
+    private String personPhotoUrl;
+    private String email;
     private boolean mIntentInProgress;
     private boolean signedInUser;
     private ConnectionResult mConnectionResult;
@@ -41,11 +46,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, C
     private ImageView image;
     private TextView username, emailLabel;
     private LinearLayout profileFrame, signinFrame;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         signinButton = (SignInButton) findViewById(R.id.signin);
         signinButton.setOnClickListener(this);
@@ -118,16 +123,33 @@ public class MainActivity extends FragmentActivity implements OnClickListener, C
     }
 
     @Override
+    protected void onResume() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if ((sharedPreferences.contains("personName"))&& (sharedPreferences.contains("email"))){
+                getProfileInformation();
+                profileFrame.setVisibility(View.VISIBLE);
+            }
+        else{
+            signinFrame.setVisibility(View.VISIBLE);
+        }
+
+        super.onResume();
+    }
+
+    @Override
     public void onConnected(Bundle arg0) {
         signedInUser = false;
         Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
-        //Intent Navigate = new Intent(this,Navigation.class);
-        //startActivity(Navigate);
+
         getProfileInformation();
+
     }
 
-    private void updateProfile(boolean isSignedIn) {
+    public void updateProfile(boolean isSignedIn) {
         if (isSignedIn) {
+
+            Intent i = new Intent(this,Navigation.class);
+            startActivity(i);
             signinFrame.setVisibility(View.GONE);
             profileFrame.setVisibility(View.VISIBLE);
 
@@ -137,16 +159,24 @@ public class MainActivity extends FragmentActivity implements OnClickListener, C
         }
     }
 
-    protected void getProfileInformation() {
+   public void getProfileInformation() {
         try {
             if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                 Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-                String personName = currentPerson.getDisplayName();
-                String personPhotoUrl = currentPerson.getImage().getUrl();
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                personName = currentPerson.getDisplayName();
+                personPhotoUrl = currentPerson.getImage().getUrl();
+                System.out.println(personPhotoUrl);
+                email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                username.setText(personName);
-                emailLabel.setText(email);
+                editor.putString("personName",personName);
+                editor.putString("email",email);
+                editor.putString("personPhotoUrl",personPhotoUrl);
+                editor.commit();
+
+               username.setText(personName);
+               emailLabel.setText(email);
 
                 new LoadProfileImage(image).execute(personPhotoUrl);
 
@@ -195,6 +225,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener, C
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
             updateProfile(false);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+           //moveTaskToBack(true);
+            //Welcome.this.finish();
         }
     }
 

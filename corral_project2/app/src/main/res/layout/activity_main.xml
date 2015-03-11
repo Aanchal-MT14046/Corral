@@ -5,7 +5,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".AndroidGooglePlusExample" >
+    tools:context=".AndroidGooglePlusExample"
+    android:background="@drawable/tomatoes">
 
     <LinearLayout
         android:id="@+id/profileFrame"
@@ -66,7 +67,7 @@
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/signin"
-            android:layout_width="fill_parent"
+            android:layout_width="298dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:textSize="18dp" />
